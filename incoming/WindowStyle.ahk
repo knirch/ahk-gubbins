@@ -19,6 +19,9 @@ return
 
 ; This comment for sure sounds like I've lifted the code from somewhere, I don't emacs
 
+; copied from
+; https://www.autohotkey.com/board/topic/114598-borderless-windowed-mode-forced-fullscreen-script-toggle/
+
 ;;; - Emacs will be maximized behind instead of in front of
 ;;; the taskbar. Workaround: WinHide ahk_class Shell_TrayWnd
 ToggleFakeFullscreen() {
