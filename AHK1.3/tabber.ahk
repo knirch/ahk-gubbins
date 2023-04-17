@@ -45,7 +45,7 @@
 return
 
 Activate_Window:
-	SetTitleMatchMode, 3
+	SetTitleMatchMode, 3 ; exact match
 	WinGetClass, Class, %A_ThisMenuItem%
 	if (Class="Windows.UI.Core.CoreWindow") ; the minimized window has another class
 	{
