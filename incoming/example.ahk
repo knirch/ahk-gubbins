@@ -1,4 +1,5 @@
 ; Not my code. Need source reference.
+;; looks like the base I used for WinHacks...
 
 ; Detect any DllCall errors.
 try {
