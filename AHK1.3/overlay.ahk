@@ -9,17 +9,29 @@
 ;     DWORD BatteryFullLifeTime;
 ;   } SYSTEM_POWER_STATUS, *LPSYSTEM_POWER_STATUS;
 
-Battery := Gui()
-Battery.Opt("+AlwaysOnTop -Caption +ToolWindow")  ; +ToolWindow avoids a taskbar button and an alt-tab menu item.
-Battery.BackColor := "000000"  ; Can be any RGB color (it will be made transparent below).
-Battery.SetFont("s16")  ; Set a large font size (32-point).
-BatteryText := Battery.Add("Text", "r1 cLime", "XXXXX YYYYY")  ; XX & YY serve to auto-size the window.
-; Make all pixels of this color transparent and make the text itself translucent (150):
-;WinSetTransColor(Battery.BackColor " 255", Battery)
-;WinSetTransColor(Battery.BackColor " 255", Battery)
+Battery := Gui("+AlwaysOnTop -Caption +ToolWindow")
+Battery.MarginX := 1
+Battery.MarginY := 1
+Battery.BackColor := "000000"
+Battery.SetFont("s12")
+BatteryText := Battery.Add("Text", "left cLime", "9999 min")
+; BatteryText := Battery.Add("Text", "right cLime", "9999 min")
+WinSetTransColor(Battery.BackColor " 255", Battery)
+
 SetTimer(UpdateBAT, 2000)
-UpdateBAT()  ; Make the first update immediate rather than waiting for the timer.
-Battery.Show("x0 y0 NoActivate")  ; NoActivate avoids deactivating the currently active window.
+UpdateBAT()
+Battery.Show("x0 y0 NoActivate")
+
+;; Align to right
+; Battery.Opt("-DPIScale")
+; Battery.GetPos(,, &width,)
+; Battery.Move(A_ScreenWidth - width)
+
+; Align to bottom
+Battery.Opt("-DPIScale")
+Battery.GetPos(, , , &height)
+Battery.Move(, A_ScreenHeight - height)
+Battery.opt("+DPIScale")
 
 getPower() {
     SYSTEM_POWER_STATUS := Buffer(12)
@@ -37,3 +49,6 @@ getPower() {
 UpdateBAT(*) {
     BatteryText.Value := Round(getPower().BatteryLifeTime / 60) . " min"
 }
+
+
+; https://www.autohotkey.com/boards/viewtopic.php?p=50713&sid=b37af19156951a0adac45339a40cfbf7#p50713
