@@ -1,3 +1,6 @@
+#Requires AutoHotkey >=2
+#SingleInstance Force
+
 ; https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-getsystempowerstatus
 ; https://learn.microsoft.com/en-us/windows/win32/api/winbase/ns-winbase-system_power_status
 ; typedef struct _SYSTEM_POWER_STATUS {
@@ -18,8 +21,8 @@ BatteryText := Battery.Add("Text", "left cLime", "9999 min")
 ; BatteryText := Battery.Add("Text", "right cLime", "9999 min")
 WinSetTransColor(Battery.BackColor " 255", Battery)
 
-SetTimer(UpdateBAT, 2000)
-UpdateBAT()
+SetTimer(updateBattery, 2000)
+updateBattery()
 Battery.Show("x0 y0 NoActivate")
 
 ;; Align to right
@@ -46,9 +49,10 @@ getPower() {
     }
 }
 
-UpdateBAT(*) {
+updateBattery(*) {
     BatteryText.Value := Round(getPower().BatteryLifeTime / 60) . " min"
+    ; I need this so it becomes visible again when overlapping with the taskbar.
+    WinMoveTop(Battery)
 }
-
 
 ; https://www.autohotkey.com/boards/viewtopic.php?p=50713&sid=b37af19156951a0adac45339a40cfbf7#p50713
